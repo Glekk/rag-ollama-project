@@ -7,8 +7,8 @@ Example:
 ## Contents
 - [Project Overview](#project-overview)
 - [Used Technologies](#used-technologies)
-    - [API](#api)
-    - [APP](#app)
+- [API](#api)
+- [APP](#app)
 - [Installation](#installation)
 - [Usage](#usage)
 
@@ -25,7 +25,7 @@ This project is an example of RAG implementation using LangChain and Ollama. It 
 - Streamlit
 - Docker
 
-### API
+## API
 The API is responsible for loading the PDF files, storing them into vector database, extracting the information from them and sending the query to the LLM.
 It uses LangChain and Ollama to extract the information from the PDF files and form a responce. The API is implemented using Flask. The API has the following endpoints:
 1. `/ai` - to get the response from the LLM without the PDF file
@@ -51,7 +51,7 @@ It uses LangChain and Ollama to extract the information from the PDF files and f
     - Response: `{"status": "string"}`
 
 
-#### APP 
+## APP 
 The APP is a simple Streamlit web application that allows to interact with the API. It has the following features:
 1. Load PDF file with 
 2. Ask a question and get the response
@@ -79,7 +79,7 @@ pip install -r api/requirements.txt
 pip install -r app/requirements.txt
 ```
 
-### Usage
+## Usage
 1. If you want to run it locally, you would need to run the API and the APP separately. And as prerequisites, you would need to have Ollama installed and running.  
     - You can install Ollama from [official website](https://ollama.com/).  
     - After you have installed Ollama, you need to download model and start the server (in my case i downloaded llama3.2, however, you can download any other model, but you would need to change the model name in the `api/api_config.yaml` file):
