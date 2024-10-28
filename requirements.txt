@@ -1,0 +1,14 @@
+Flask
+langchain
+langchain_community
+langchain_core
+langchain-text-splitters
+fastembed
+pdfplumber
+chromadb
+multidict
+PyYAML
+streamlit
+requests
+waitress
+Werkzeug

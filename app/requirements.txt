@@ -1,0 +1,3 @@
+multidict
+streamlit
+requests

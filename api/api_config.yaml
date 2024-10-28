@@ -1,0 +1,15 @@
+model: 'llama3.2'
+
+ollama_url: 'http://localhost:11434'
+
+db_folder: '../db'
+
+chain_search_kwargs:
+  k: 5
+  score_threshold: 0.5
+
+splitter_config:
+  chunk_size: 1000
+  chunk_overlap: 200
+
+logger: staging
