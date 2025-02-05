@@ -13,12 +13,29 @@ config = get_config()
 
 
 def get_session_history(session_id):
+    '''Get the chat history for a given session_id
+    
+    Args:
+        session_id (str): The session_id to get the chat history for
+        
+    Returns:
+        ChatMessageHistory: The chat history for the given session_id
+    '''
     if session_id not in store:
         store[session_id] = ChatMessageHistory()
     return store[session_id]
 
 
 def get_retrieval_chain(vector_store, llm):
+    '''Create the retrieval chain
+
+    Args:
+        vector_store (VectorStore): The vector store to use
+        llm (LanguageModelLike): The LLM model to use 
+
+    Returns:
+        RunnableWithMessageHistory: The retrieval chain
+    '''
     retriever = vector_store.as_retriever(
         search_type='similarity_score_threshold',
         search_kwargs={

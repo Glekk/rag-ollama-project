@@ -91,7 +91,7 @@ pip install -r app/requirements.txt
     - After you have installed Ollama and started the server, you can run the API:
     ```
     cd api
-    python app.py
+    python api.py
     ```
     and the APP:
     ```

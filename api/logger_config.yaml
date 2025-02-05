@@ -19,6 +19,7 @@ handlers:
         formatter: simple
         filename: ../logs/api.log
         mode: a
+        encoding: utf-8
 
 loggers:
     development:

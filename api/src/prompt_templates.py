@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-
+# Prompt template to gather chat history and the latest user question
 contextualize_q_system_prompt = '''Given a chat history and the latest user question \
 which might reference context in the chat history, formulate a standalone question \
 which can be understood without the chat history. Do NOT answer the question, \
@@ -15,7 +15,7 @@ contextualize_q_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-
+# Prompt template for question-answering tasks with context
 qa_system_prompt = '''You are an assistant for question-answering tasks. \
 Use the following context to answer the question. \
 If you don't know the answer, just say that you don't know. \

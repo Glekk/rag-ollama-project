@@ -4,7 +4,7 @@ import requests
 from multidict import MultiDict
 import streamlit as st
 
-
+# If using docker, change the host to the container name
 if os.environ.get('API_URL'):
     host = os.environ.get('API_URL')
 else:
@@ -12,6 +12,7 @@ else:
 
 
 def process_input():
+    '''Request to the API to give a response to the user's input'''
     st.session_state['user_text'] = st.session_state['user_input']
     st.session_state['user_input'] = ''
     if st.session_state['user_text'] and len(st.session_state['user_text'].strip()) > 0:
@@ -26,6 +27,12 @@ def process_input():
 
 
 def load_pdf(pdf_docs):
+    '''
+    Request to the API to upload the pdf files
+
+    Args:
+        pdf_docs: list of pdf files
+    '''
     if pdf_docs:
         dict_files = MultiDict()
         for pdf in pdf_docs:
@@ -43,6 +50,7 @@ def load_pdf(pdf_docs):
 
 
 def clean_db():
+    '''Request to the API to clean the database'''
     response = requests.post(f'{host}/clean_db', json={'session_id': st.session_state['session_id']})
     if response.status_code == 200:
         success = st.success('DB cleaned')
@@ -53,6 +61,7 @@ def clean_db():
 
 
 def clean_chat_history():
+    '''Request to the API to clean the chat history'''
     response = requests.post(f'{host}/clean_chat_history', 
                             json={'session_id': st.session_state['session_id']})
     if response.status_code == 200:

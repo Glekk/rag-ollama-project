@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 config = get_config()
 
+# If using docker, change the LLM URL to the container name
 if os.environ.get('OLLAMA_URL'):
     ollama_url = os.environ.get('OLLAMA_URL')
 else:
@@ -25,18 +26,26 @@ logger = get_logger()
 
 @app.errorhandler(Exception)
 def internal_server_error(e):
+    '''Handle internal server errors'''
     logger.error(f'Internal server error: {str(e)}')
     return {'status': 'Internal server error', 'message': str(e)}, 500
 
 
 @app.errorhandler(HTTPException)
 def handle_exception(e):
+    '''Handle HTTP exceptions'''
     logger.error(f'HTTPException: {str(e)}')
     return {'name': e.name, 'description': e.description}, e.code
 
 
 @app.route('/ai', methods=['POST'])
 def ai_post():
+    '''
+    Simple request to the LLM model without any context
+    
+    Returns:
+        responce (dict): The responce from the LLM model in json format
+    '''
     logger.info('Post ask request received')
     data = request.json
 
@@ -53,6 +62,12 @@ def ai_post():
 
 @app.route('/ask_pdf', methods=['POST'])
 def ask_pdf_post():
+    '''
+    Request to the LLM model with context
+
+    Returns:
+        responce (dict): The responce from the LLM model in json format
+    '''
     logger.info('Post pdf request received')
     data = request.json
     session_id = data['session_id']
@@ -90,9 +105,15 @@ def ask_pdf_post():
 
 @app.route('/load_pdf', methods=['POST'])
 def pdf_post():
+    '''
+    Load pdf files into the vector store
+
+    Returns:
+        response (dict): The status of the file upload in json format
+    '''
     files = request.files.getlist('files')
     session_id = request.form['session_id']
-    print(session_id)
+
     docs = []
     filenames = []
     for file in files:
@@ -106,7 +127,7 @@ def pdf_post():
     chunks = get_chunks(docs)
     logger.info(f'Created {len(chunks)} chunks')
 
-    vector_store = get_vector_store(session_id, docs)
+    vector_store = get_vector_store(session_id, chunks)
     logger.info('Vector store saved')
 
     response = {'status': 'File successfully uploaded', 
@@ -120,6 +141,12 @@ def pdf_post():
 
 @app.route('/clean_db', methods=['POST'])
 def clean_db_get():
+    ''' 
+    Clean the vector database
+    
+    Returns:
+        response (dict): The status of the database cleaning in json format
+    '''
     session_id = request.json['session_id']
     clean_db(session_id)
     logger.info('DB cleaned')
@@ -131,6 +158,12 @@ def clean_db_get():
 
 @app.route('/clean_chat_history', methods=['POST'])
 def clean_chat_history_get():
+    '''
+    Clean the chat history
+
+    Returns:
+        response (dict): The status of the chat history cleaning in json format
+    '''
     session_id = request.json['session_id']
     store.pop(session_id)
     logger.info('Chat history cleaned')

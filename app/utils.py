@@ -4,6 +4,7 @@ from src.requests import clean_chat_history
 
 
 def display_messages():
+    '''Function to display chat messages'''
     st.subheader('Chat')
     for i, (msg, role) in enumerate(st.session_state['messages']):
         with st.chat_message(role):
@@ -13,6 +14,7 @@ def display_messages():
 
 
 def reset_state():
+    '''Reset app's state (clear chat history, reset user text, generate new session id)'''
     st.session_state['messages'] = []
     st.session_state['user_text'] = ''
     if 'session_id' in st.session_state:
@@ -24,4 +26,5 @@ def reset_state():
 
 
 def generate_session_id():
+    '''Generate a unique session id using uuid'''
     return str(uuid.uuid4())

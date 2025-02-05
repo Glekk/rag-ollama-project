@@ -6,13 +6,14 @@ from utils import display_messages, reset_state
 if __name__ == '__main__':
     st.set_page_config(page_title='Ollama RAG app', page_icon='🦙')
     if len(st.session_state) == 0:
-        reset_state()
+        reset_state() # Initialize session state if it doesn't exist
 
+    # Main body
     st.header('Ollama RAG app')
     display_messages()
     st.text_input('Enter your question:', key='user_input', on_change=process_input)
 
-
+    # Sidebar with utilities
     with st.sidebar:
         st.subheader('Documents')
         pdf_docs = st.file_uploader('Upload PDF files and click on Process', accept_multiple_files=True, 
